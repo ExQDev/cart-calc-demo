@@ -45,29 +45,7 @@ export default {
         currency: '',
         price: 0
       },
-      availableProducts: [
-        { 
-          name: 'Wood',
-          quantity: 1,
-          price: 1,
-          currency: 'USD',
-          thumb: 'http://www.pngall.com/wp-content/uploads/2017/05/Wood-Free-Download-PNG.png'
-        },
-        { 
-          name: 'Steel',
-          quantity: 1,
-          price: 5,
-          currency: 'USD',
-          thumb: 'https://img.pngio.com/steel-png-hd-steel-png-2000_1500.png'
-        },
-        { 
-          name: 'Bricks',
-          quantity: 1,
-          price: 2,
-          currency: 'USD',
-          thumb: 'https://www.freeiconspng.com/uploads/element-3d-apple-iphone-x-4.png'
-        }
-      ],
+      availableProducts: [],
       products: [],
       totalPrice: 0,
       selectedCurrency: 'USD'
@@ -85,11 +63,21 @@ export default {
     removeThis: function(item){
       this.products = this.products.filter(pitem => pitem.name !== item.name);
     },
+    updateCart: function(newItemsPrices) {
+      this.products = this.products.map(prod => {
+        const updateObject = newItemsPrices.find(item => item.name === prod.name);
+        return {
+          ...prod,
+          price: updateObject.price,
+          currency: updateObject.currency
+        }
+      })
+    },
     updatePrice: function() {
         const data = { 
           currency: this.selectedCurrency, 
           amount: this.products.reduce((accum, current) => {
-            return accum + current.quantity * current.price
+            return accum + current.quantity * current.priceInUSD
           }, 0) 
         };
         axios({
@@ -105,10 +93,31 @@ export default {
         })
         .catch(console.error);
     },
+    getPrices: function() {
+        const data = { 
+          currency: this.selectedCurrency
+        };
+        axios({
+          method: 'POST',
+          url: 'http://localhost:3000/getPrices',
+          data: JSON.stringify(data),
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        })
+        .then(response => {
+          this.availableProducts = response.data.products;
+          this.updateCart(response.data.products);
+        })
+        .catch(console.error);
+    },
     checkout: function(){
       alert('Checked out!')
       this.products = []
     }
+  },
+  mounted: function () {
+    this.getPrices();
   },
   watch: {
     products: {
@@ -118,7 +127,8 @@ export default {
       deep: true
     },
     selectedCurrency: function(){
-      this.updatePrice()
+      this.getPrices();
+      this.updatePrice();
     }
   }
 };

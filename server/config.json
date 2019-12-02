@@ -1,4 +1,27 @@
 {
   "convApiEndpoint": "https://free.currconv.com/api/v7/convert?compact=ultra",
-  "apiKey": "3cdad33532eb3bbce319"
+  "apiKey": "3cdad33532eb3bbce319",
+  "availableProducts": [
+    { 
+      "name": "Wood",
+      "quantity": 1,
+      "priceInUSD": 1,
+      "currency": "USD",
+      "thumb": "http://www.pngall.com/wp-content/uploads/2017/05/Wood-Free-Download-PNG.png"
+    },
+    { 
+      "name": "Steel",
+      "quantity": 1,
+      "priceInUSD": 5,
+      "currency": "USD",
+      "thumb": "https://img.pngio.com/steel-png-hd-steel-png-2000_1500.png"
+    },
+    { 
+      "name": "Bricks",
+      "quantity": 1,
+      "priceInUSD": 2,
+      "currency": "USD",
+      "thumb": "https://www.freeiconspng.com/uploads/element-3d-apple-iphone-x-4.png"
+    }
+  ]
 }

@@ -14,9 +14,6 @@
 <script>
 export default {
   props: { avitem: { type: Object }, removeThis: { type: Function } },
-  mounted: function () {
-    console.log(this.avitem)
-  }
 }
 </script>
 
