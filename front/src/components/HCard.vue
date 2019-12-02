@@ -5,7 +5,7 @@
     </div>
     <div class="info-section">
       <h4>{{avitem.name}}</h4>
-      <p>{{avitem.price * avitem.quantity}} {{avitem.currency}}   (x{{avitem.quantity}}) </p>
+      <p>{{(avitem.price * avitem.quantity).toFixed(2)}} {{avitem.currency}}   (x{{avitem.quantity}}) </p>
       <button @click="removeThis(avitem)">Remove from cart</button>
     </div>
   </div>
